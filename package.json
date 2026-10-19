@@ -1,0 +1,10 @@
+{
+  "name": "cs2-hub",
+  "version": "1.0.0",
+  "description": "FACEIT uslubidagi CS2 3v3 platforma (Steam login, navbat, ELO). Tashqi paketlarsiz.",
+  "main": "server.js",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

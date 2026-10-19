@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>csreyting.uz</title>
+<style>
+  :root {
+    --bg:#0b0d11; --card:#14181f; --card2:#1a1f28; --line:#262c37; --text:#eceff4; --mute:#8b94a3;
+    --accent:#ff5a1f; --good:#35d399; --bad:#ff6b6b; --star:#ffc233;
+    --L1:#cd8a4a; --L2:#c3cad6; --L3:#ffc233; --L4:#4fd8c7; --L5:#ff5a1f;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; color:var(--text); font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    background:radial-gradient(1200px 500px at 50% -150px,#2a1408 0%,transparent 70%),var(--bg); min-height:100vh; }
+  a { color:inherit; }
+  header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; max-width:1040px; margin:0 auto; padding:18px 16px; }
+  .logo { font-weight:900; font-size:22px; letter-spacing:.5px; } .logo b { color:var(--accent); }
+  .pill { display:inline-flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:4px 6px 4px 4px; }
+  .ava { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,var(--accent),#b53a0c); display:grid; place-items:center; font-weight:800; font-size:14px; overflow:hidden; flex:none; }
+  .ava img { width:100%; height:100%; object-fit:cover; }
+  main { max-width:1040px; margin:0 auto; padding:0 16px 40px; display:grid; gap:16px; grid-template-columns:1fr 1fr; }
+  .full { grid-column:1/-1; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; }
+  h2 { margin:0 0 14px; font-size:12px; text-transform:uppercase; letter-spacing:1.4px; color:var(--mute); font-weight:700; }
+  button, .btn { background:var(--accent); color:#fff; border:0; border-radius:10px; padding:10px 18px; font-weight:700; cursor:pointer; font-size:14px; text-decoration:none; display:inline-block; font-family:inherit; }
+  button:disabled { opacity:.45; cursor:not-allowed; }
+  .btn.big { padding:14px 26px; font-size:16px; border-radius:12px; }
+  button.ghost, .btn.ghost { background:transparent; border:1px solid var(--line); color:var(--text); }
+  button.ghost:hover:not(:disabled), .btn.ghost:hover { border-color:#3a4252; }
+  button.on { border-color:var(--accent); color:var(--accent); }
+  button.gold { background:linear-gradient(135deg,#ffcf4a,#ff9d1f); color:#2a1900; }
+  input, select { background:#0b0d11; border:1px solid var(--line); color:var(--text); border-radius:10px; padding:9px 11px; font-size:14px; width:100%; font-family:inherit; }
+  label { font-size:12px; color:var(--mute); display:block; margin-bottom:3px; }
+  .mute { color:var(--mute); } .good { color:var(--good); } .bad { color:var(--bad); } .stars { color:var(--star); }
+  .L1{color:var(--L1)}.L2{color:var(--L2)}.L3{color:var(--L3)}.L4{color:var(--L4)}.L5{color:var(--L5)}
+
+  .hero { text-align:center; padding:44px 22px; background:linear-gradient(180deg,#1c120c,var(--card)); }
+  .hero h1 { margin:0 0 10px; font-size:clamp(28px,5vw,44px); line-height:1.1; font-weight:900; }
+  .hero h1 em { color:var(--accent); font-style:normal; }
+  .hero p { color:var(--mute); max-width:560px; margin:0 auto 22px; font-size:16px; }
+  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:30px; text-align:left; }
+  .step { background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:14px; }
+  .step b { display:block; margin-bottom:2px; } .step span { color:var(--mute); font-size:13px; }
+  .num { width:26px; height:26px; border-radius:50%; background:var(--accent); display:grid; place-items:center; font-weight:800; font-size:13px; margin-bottom:8px; }
+  .loginrow { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; align-items:center; }
+  .loginrow form { display:flex; gap:6px; }
+
+  /* Profil kartasi */
+  .prof { padding:0; overflow:hidden; }
+  .banner { height:130px; position:relative; overflow:hidden; background:
+    repeating-linear-gradient(135deg,rgba(255,255,255,.04) 0 10px,transparent 10px 20px),
+    linear-gradient(120deg,#3a1604,#a8400f 55%,#ff5a1f); }
+  .bgimg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .pre { background-size:300% 300% !important; animation:shift 8s ease infinite; }
+  .pre.fire { background-image:linear-gradient(120deg,#3a0a00,#ff3d00,#ffb300,#ff3d00,#3a0a00) !important; }
+  .pre.neon { background-image:linear-gradient(120deg,#12002b,#7a2cff,#00e5ff,#7a2cff,#12002b) !important; }
+  .pre.matrix { background-image:linear-gradient(120deg,#001a06,#00c853,#b9f6ca,#00c853,#001a06) !important; }
+  .pre.ocean { background-image:linear-gradient(120deg,#001f3f,#0074d9,#7fdbff,#0074d9,#001f3f) !important; }
+  @keyframes shift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+  .prof .body { display:flex; gap:18px; flex-wrap:wrap; align-items:flex-end; padding:0 22px 6px; margin-top:-48px; position:relative; }
+  .ava-lg { width:104px; height:104px; border-radius:18px; border:4px solid var(--card); background:linear-gradient(135deg,var(--accent),#b53a0c);
+    display:grid; place-items:center; font-size:44px; font-weight:900; overflow:hidden; flex:none; }
+  .ava-lg img { width:100%; height:100%; object-fit:cover; }
+  .who { flex:1; min-width:220px; padding-top:54px; }
+  .nick { font-size:26px; font-weight:900; line-height:1.15; word-break:break-word; }
+  .last { color:var(--good); font-size:13px; margin-top:2px; }
+  .status { color:var(--mute); font-size:13px; margin-top:8px; } .status b { color:var(--text); font-weight:600; }
+  .chips2 { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; background:var(--card2); border:1px solid var(--line); border-radius:999px; padding:4px 12px; font-size:13px; font-weight:600; }
+  .chip i { width:9px; height:9px; border-radius:50%; background:var(--mute); display:inline-block; }
+  .chip.prem { background:linear-gradient(135deg,#ffcf4a,#ff9d1f); color:#2a1900; border:0; }
+  .flag { width:22px; height:15px; object-fit:cover; border-radius:3px; vertical-align:middle; box-shadow:0 0 0 1px rgba(255,255,255,.12); }
+  .flag.lg { width:30px; height:20px; }
+  .tabs { display:flex; gap:8px; padding:14px 22px 20px; flex-wrap:wrap; }
+  .tab { background:var(--card2); border:1px solid var(--line); color:var(--text); flex:1; min-width:110px; padding:11px 8px; }
+  .tab.on { background:var(--accent); border-color:var(--accent); color:#fff; }
+
+  .slots { display:grid; grid-template-columns:repeat(10,1fr); gap:8px; margin:16px 0; }
+  .slot { aspect-ratio:1; border-radius:12px; border:2px dashed #2f3745; display:grid; place-items:center; font-weight:800; color:#3d4757; font-size:15px; }
+  .slot.w { border:2px solid var(--good); background:rgba(53,211,153,.12); color:var(--good); }
+  .slot.l { border:2px solid var(--bad); background:rgba(255,107,107,.1); color:var(--bad); }
+  .slot.next { border-color:var(--accent); color:var(--accent); animation:pulse 1.6s infinite; }
+  @keyframes pulse { 50% { box-shadow:0 0 0 5px rgba(255,90,31,.15); } }
+  .progress { display:flex; align-items:baseline; gap:10px; }
+  .progress .n { font-size:46px; font-weight:900; line-height:1; } .progress .n small { font-size:22px; color:var(--mute); font-weight:700; }
+
+  .big { display:flex; align-items:center; gap:26px; flex-wrap:wrap; }
+  .badge { width:118px; height:132px; display:grid; place-items:center; position:relative; }
+  .badge svg { position:absolute; inset:0; }
+  .badge .lv { position:relative; font-size:52px; font-weight:900; text-shadow:0 2px 12px rgba(0,0,0,.5); color:#fff; }
+  .bar { height:10px; background:#0b0d11; border-radius:6px; overflow:hidden; margin:12px 0 6px; }
+  .bar > div { height:100%; background:linear-gradient(90deg,#ff8a1f,var(--accent)); border-radius:6px; transition:width .4s; }
+  .starrow { font-size:20px; letter-spacing:2px; } .starrow i { font-style:normal; color:#2f3745; } .starrow i.f { color:var(--star); }
+
+  .info { display:grid; grid-template-columns:1fr 1fr; gap:6px 28px; }
+  .sec h3 { margin:14px 0 8px; font-size:15px; font-weight:600; display:flex; align-items:center; gap:8px; }
+  .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:8px; }
+  .tile { background:var(--card2); border:1px solid var(--line); border-radius:10px; padding:8px 12px; min-width:0; }
+  .tile small { display:block; color:var(--mute); font-size:11px; }
+  .tile b { display:block; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .tile.copy { cursor:pointer; } .tile.copy:hover { border-color:#3a4252; }
+  .fl { display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; font-weight:800; font-size:13px; color:#111; }
+  .note { font-size:12px; color:var(--mute); margin-top:12px; }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .inline { display:flex; gap:8px; }
+
+  /* Premium */
+  .perks { margin:0 0 16px; padding:0; list-style:none; } .perks li { padding:5px 0 5px 26px; position:relative; } .perks li::before { content:'★'; color:var(--star); position:absolute; left:2px; }
+  .price { font-size:34px; font-weight:900; } .price small { font-size:14px; color:var(--mute); font-weight:500; }
+  .thumbs { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px; margin:10px 0; }
+  .thumb { height:70px; border-radius:10px; border:2px solid transparent; cursor:pointer; position:relative; overflow:hidden; background:var(--card2); }
+  .thumb:hover { border-color:var(--accent); } .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb span { position:absolute; left:6px; bottom:4px; font-size:12px; font-weight:700; text-shadow:0 1px 4px #000; }
+
+  /* Demo: qo'ldagi pichoq */
+  .vm-wrap { display:grid; grid-template-columns:1.1fr 1fr; gap:22px; align-items:start; }
+  .vm { border-radius:14px; border:1px solid var(--line); overflow:hidden; background:radial-gradient(circle at 50% 38%,#232a36 0%,#10141a 70%); }
+  .vm svg { display:block; width:100%; height:auto; }
+  .bob { animation:bob 3.4s ease-in-out infinite; transform-origin:210px 160px; }
+  @keyframes bob { 0%,100% { transform:translateY(0) rotate(0); } 50% { transform:translateY(-5px) rotate(1.2deg); } }
+  .vm.insp .flip { animation:insp 1.3s ease-in-out; transform-origin:210px 160px; }
+  @keyframes insp { 0% { transform:scaleX(1); } 45% { transform:scaleX(-1); } 100% { transform:scaleX(1); } }
+  .vm-opts label { margin:14px 0 6px; } .vm-opts label:first-child { margin-top:0; }
+  .vm-opts .chips { margin-bottom:0; }
+  .vm-opts button.ghost { padding:6px 12px; font-size:13px; }
+  .ladder { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+  .rung { text-align:center; border:1px solid var(--line); border-radius:12px; padding:12px 4px; background:var(--card2); position:relative; }
+  .rung.cur { border-color:currentColor; background:#1d232d; }
+  .rung b { display:block; font-size:17px; } .rung span { font-size:11px; color:var(--mute); display:block; }
+  .rung .cnt { color:var(--text); font-size:20px; font-weight:800; margin-top:6px; } .rung .cnt small { color:var(--mute); font-size:11px; font-weight:500; }
+  .rung .me { position:absolute; top:-9px; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-size:10px; font-weight:800; padding:1px 8px; border-radius:999px; }
+  .rung .mini { height:5px; border-radius:3px; background:#0b0d11; margin:8px 10px 0; overflow:hidden; } .rung .mini i { display:block; height:100%; background:currentColor; }
+
+  .tag { display:inline-block; background:#262c37; border-radius:6px; padding:1px 8px; font-size:12px; color:var(--mute); font-weight:600; }
+  .tag.t10 { background:#4a3300; color:var(--star); } .tag.t100 { background:#3a2418; color:#ff9a62; } .tag.t1000 { background:#1f2a36; color:#7db4ff; }
+  table { width:100%; border-collapse:collapse; } td,th { padding:9px 6px; text-align:left; border-bottom:1px solid var(--line); }
+  th { color:var(--mute); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:1px; }
+  tr.me { background:rgba(255,90,31,.08); }
+  .chips { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; align-items:center; }
+  details { margin-top:16px; border-top:1px solid var(--line); padding-top:12px; } summary { cursor:pointer; color:var(--mute); font-size:13px; }
+  .grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0 10px; }
+  .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+  @media (max-width:760px){ .vm-wrap{grid-template-columns:1fr;} main{grid-template-columns:1fr;} .steps{grid-template-columns:1fr;} .info,.row2{grid-template-columns:1fr;} .grid4{grid-template-columns:1fr 1fr;} .badge{width:96px;height:108px;} .slot{border-radius:8px;font-size:12px;} .slots{gap:5px;} .ladder{grid-template-columns:repeat(2,1fr);} }
+  body { padding-bottom:110px !important; }
+  #dock { position:fixed; left:50%; bottom:max(16px, env(safe-area-inset-bottom)); transform:translateX(-50%); z-index:50; display:flex; gap:4px; padding:7px; border-radius:999px; max-width:calc(100vw - 20px);
+    background:rgba(255,255,255,.07); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid rgba(255,255,255,.18); box-shadow:0 10px 40px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(255,255,255,.05); }
+  #dock:empty { display:none; }
+  #dock button { background:transparent; border:0; color:#e8ecf3; padding:11px 18px; border-radius:999px; font-weight:700; white-space:nowrap; }
+  #dock button.on { background:rgba(255,255,255,.18); box-shadow:inset 0 1px 0 rgba(255,255,255,.3); }
+  @media (max-width:560px) { #dock button { padding:10px 11px; font-size:13px; } }
+  .vip { box-shadow:0 0 0 2px rgba(255,207,74,.55), 0 0 28px rgba(255,179,0,.22) !important; }
+  #lb tr[onclick]:hover td { background:rgba(255,255,255,.04); }
+  .mback { position:fixed; inset:0; background:rgba(0,0,0,.65); backdrop-filter:blur(6px); z-index:100; display:grid; place-items:center; padding:16px; }
+  .mbox { position:relative; max-width:440px; width:100%; background:#0f1522; border:1px solid rgba(255,207,74,.4); border-radius:26px; padding:28px 24px; text-align:center; box-shadow:0 0 60px rgba(255,179,0,.15); }
+  .mx { position:absolute; right:12px; top:12px; background:transparent; border:0; color:var(--mute); font-size:18px; }
+  .mico { font-size:44px; }
+  .mperks { list-style:none; padding:0; margin:16px 0; text-align:left; display:grid; gap:8px; }
+  .mperks li { background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:12px 14px; font-size:14px; }
+  .vgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; margin-top:12px; }
+  .vcard { background:var(--card2); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  .vthumb { aspect-ratio:16/9; background:linear-gradient(135deg,#2a3142,#161b26) center/cover; display:grid; place-items:center; cursor:pointer; position:relative; }
+  .vplay { width:46px; height:46px; border-radius:50%; background:rgba(0,0,0,.6); display:grid; place-items:center; color:#fff; }
+  .vkind { position:absolute; left:8px; top:8px; background:rgba(0,0,0,.65); padding:2px 8px; border-radius:999px; font-size:12px; font-weight:700; }
+  .vframe { width:100%; aspect-ratio:16/9; border:0; display:block; }
+  .vmeta { padding:10px 12px; display:grid; gap:6px; }
+  .srow { display:flex; gap:10px; align-items:center; padding:10px 12px; border:1px solid var(--line); border-radius:12px; background:var(--card2); cursor:pointer; margin-top:8px; }
+  #menu { display:none; position:absolute; right:0; top:calc(100% + 10px); width:270px; z-index:60; text-align:left; padding:14px; border-radius:18px;
+    background:rgba(15,21,34,.82); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid rgba(255,255,255,.16); box-shadow:0 14px 44px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.2); }
+  #menu.open { display:block; }
+  #menu .inline { margin:6px 0 10px; }
+  #menu .out { display:block; text-align:center; padding:9px; border-radius:12px; border:1px solid var(--line); color:var(--text); text-decoration:none; font-weight:700; }
+  #pmenu { display:none; position:fixed; z-index:120; min-width:200px; padding:6px; border-radius:16px; background:rgba(15,21,34,.9); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,.16); box-shadow:0 14px 44px rgba(0,0,0,.55); }
+  #pmenu button { display:block; width:100%; text-align:left; background:transparent; border:0; color:var(--text); padding:10px 12px; border-radius:10px; font-weight:600; }
+  #pmenu button:hover { background:rgba(255,255,255,.08); }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">csreyting<b>.uz</b></div>
+  <div id="auth"></div>
+</header>
+<main id="root"></main>
+
+<div id="modal"></div><div id="pmenu"></div><nav id="dock"></nav>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let me = null, lbN = 10, maps = [], cfg = { countries: [], presets: [], gifCats: [], priceUsd: 2, premiumDays: 30 };
+let dist = { counts:[0,0,0,0,0], unplaced:0, total:0 };
+let tab = 'rating', gifCat = '', gifs = null, gifNote = '';
+let editOpen = false, viewed = null, ro = false, feed = null, feedLoading = false, stimer = null;   // viewed: boshqa o'yinchi profili (faqat ko'rish)
+const NAMES = ['Bronza','Kumush','Oltin','Platina','Master'], RANGES = ['1–10','11–20','21–30','31–40','41–50'];
+const CAT_LABELS = { cars:'Avtomobil', horror:"Qo'rqinchli", girls:'Qizlar', boys:'Bolalar', games:"O'yin", memes:'Memlar' };
+const PRESET_LABELS = { fire:'Olov', neon:'Neon', matrix:'Matritsa', ocean:'Okean' };
+
+// ---- Demo: pichoq, qoplama, qo'lqop, dastak (barcha shakllar o'zimiz chizgan soddalashtirilgan SVG) ----
+const WEAPONS = {
+  karambit:  { name:'Karambit (Pichoq)', blade:'M9,-4 C9,-66 -26,-104 -78,-92 C-40,-76 -9,-52 -9,-4 Z', ring:true },
+  ak47:      { name:'AK-47', blade:'M-20,-10 L-20,-80 L20,-80 L20,-10 Z', fuller:'M0,-20 L0,-70' },
+  usps:      { name:'USP-S (Pistolet)', blade:'M-12,-10 L-12,-60 L12,-60 L12,-10 Z', fuller:'M0,-15 L0,-50' },
+  deagle:    { name:'Desert Eagle', blade:'M-15,-10 L-15,-70 L15,-70 L15,-10 Z', fuller:'M0,-15 L0,-60' },
+  awp:       { name:'AWP (Snayper)', blade:'M-8,-10 L-8,-110 L8,-110 L8,-10 Z', fuller:'M0,-20 L0,-90' }
+};
+const KNIVES = {
+  bayonet:   { name:'Bayonet',  blade:'M-10,-6 L-10,-100 L0,-140 L10,-100 L10,-6 Z', fuller:'M0,-12 L0,-112' },
+  karambit:  { name:'Karambit', blade:'M9,-4 C9,-66 -26,-104 -78,-92 C-40,-76 -9,-52 -9,-4 Z', ring:true },
+  butterfly: { name:'Butterfly',blade:'M-8,-6 L-8,-92 L0,-126 L8,-92 L8,-6 Z', fuller:'M0,-12 L0,-98' },
+  flip:      { name:'Flip',     blade:'M-9,-6 L-9,-86 Q-8,-114 9,-126 Q11,-60 10,-6 Z', fuller:'M-3,-12 L-3,-98' },
+  huntsman:  { name:'Huntsman', blade:'M-13,-6 L-13,-84 Q-12,-110 11,-128 L13,-62 L13,-6 Z', fuller:'M0,-12 L2,-102' },
+  falchion:  { name:'Falchion', blade:'M-8,-6 L-8,-96 Q-4,-134 38,-144 Q12,-100 9,-6 Z' },
+  bowie:     { name:'Bowie',    blade:'M-15,-6 L-15,-78 L-3,-126 L15,-98 L15,-6 Z', fuller:'M0,-12 L0,-94' },
+  daggers:   { name:'Shadow Daggers', blade:'M-24,-6 L-24,-72 L-15,-98 L-6,-72 L-6,-6 Z M6,-6 L6,-72 L15,-98 L24,-72 L24,-6 Z', wide:true }
+};
+const FINISHES = {
+  steel:{ name:"Po'lat", stops:['#e8edf3','#8e99a8','#d3d9e1'] },     fade:{ name:'Fade', stops:['#ffb347','#ff4f9a','#7b4dff'] },
+  ruby:{ name:'Rubin', stops:['#ff4d6d','#b0003a','#5a001e'] },       blue:{ name:"Moviy po'lat", stops:['#7aa2c8','#355a80','#16283d'] },
+  forest:{ name:"O'rmon", stops:['#c3d68a','#6a8a3a','#2f4a1f'] },    gold:{ name:'Oltin', stops:['#fff0a0','#ffd23a','#b8860b'] },
+  slaughter:{ name:'Qon', stops:['#d11f2e','#6d0a14','#d11f2e'] },   carbon:{ name:'Karbon', stops:['#5a5f66','#1d2024','#4a4f55'] }
+};
+const GLOVES = {
+  none:{ name:"Qo'lqopsiz", fill:'skin' }, black:{ name:'Qora', fill:'#202226' }, red:{ name:'Qizil', fill:'#b3202a' },
+  camo:{ name:'Kamuflyaj', fill:'camo' },   blue:{ name:"Ko'k", fill:'#2b4f9e' }
+};
+const HANDLES = { black:{ name:'Qora', fill:'#1f2226' }, brown:{ name:'Jigarrang', fill:'#5b3b22' }, red:{ name:'Qizil', fill:'#8e1b1b' }, bone:{ name:'Suyak', fill:'#d9d2c0' } };
+let lo = null;   // tanlangan to'plam (loadout)
+
+async function api(url, body) {
+  const r = await fetch(url, body ? { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) } : undefined);
+  return r.json().catch(() => ({}));
+}
+const tierTag = t => !t ? '' : `<span class="tag ${t==='Top 10'?'t10':t==='Top 100'?'t100':'t1000'}">${t}</span>`;
+const lvlHtml = (l, n) => l ? `<b class="L${l}">${l} · ${esc(n)}</b>` : '—';
+const ava = p => `<div class="ava">${p.avatar ? `<img src="${esc(p.avatar)}" alt="">` : esc((p.name || '?')[0].toUpperCase())}</div>`;
+const fmt = n => Number(n).toLocaleString('ru-RU');
+const fdate = t => new Date(t).toLocaleDateString('ru-RU');
+const flColor = l => l <= 1 ? '#c3cad6' : l <= 3 ? '#35d399' : l <= 7 ? '#ffc233' : l <= 9 ? '#ff8a1f' : '#ff4b3a';
+const countryName = c => (cfg.countries.find(x => x[0] === c) || [])[1] || '';
+// Bayroq rasmi (Windows'da emoji bayroq ko'rinmaydi, shuning uchun rasm ishlatamiz)
+const flag = (c, lg) => c ? `<img class="flag ${lg ? 'lg' : ''}" src="https://flagcdn.com/w40/${esc(c)}.png" alt="${esc(c)}" title="${esc(countryName(c))}" onerror="this.replaceWith(document.createTextNode('${esc(c).toUpperCase()}'))">` : '';
+
+const badge = l => `<div class="badge"><svg viewBox="0 0 118 132"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="currentColor" stop-opacity=".95"/><stop offset="1" stop-color="currentColor" stop-opacity=".35"/></linearGradient></defs>
+  <path d="M59 4 L112 24 V68 C112 98 88 118 59 128 C30 118 6 98 6 68 V24 Z" fill="url(#g)" stroke="currentColor" stroke-width="3"/></svg>
+  <div class="lv">${l}</div></div>`;
+
+function landing() {
+  return `<section class="card full hero">
+    <h1>10 ta matchmaking o'yna — <em>reytingingni</em> ol</h1>
+    <p>Oddiy CS2 matchmakingida o'ynang. Dastlabki 10 ta o'yiningizga qarab sizga boshlang'ich reyting beriladi, keyin har g'alabada yulduz yig'asiz.</p>
+    <div class="loginrow">
+      <a class="btn big" href="/auth/steam">Steam orqali kirish</a>
+      <form action="/auth/demo"><input name="name" placeholder="Demo ism" style="width:150px"><button class="ghost">Demo kirish</button></form>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><b>Steam bilan kiring</b><span>Akkauntingiz avtomatik bog'lanadi.</span></div>
+      <div class="step"><div class="num">2</div><b>10 ta match o'ynang</b><span>Joylashtirish: ADR, K/D va g'alaba hisobga olinadi.</span></div>
+      <div class="step"><div class="num">3</div><b>Daraja oling</b><span>Bronzadan Mastergacha, Top 10 / 100 / 1000 jadvalida.</span></div>
+    </div></section>` + ladderCard(null) + lbCard();
+}
+
+function slotsHtml(p) {
+  const list = p.matches.slice().reverse().slice(0, 10);
+  let h = '';
+  for (let i = 0; i < 10; i++) {
+    const m = list[i];
+    h += m ? `<div class="slot ${m.win ? 'w' : 'l'}" title="${esc(m.map)} · ${m.kills}/${m.deaths}">${m.win ? 'G' : 'M'}</div>`
+           : `<div class="slot ${i === list.length ? 'next' : ''}">${i + 1}</div>`;
+  }
+  return `<div class="slots">${h}</div>`;
+}
+
+function ladderCard(p) {
+  const max = Math.max(1, ...dist.counts);
+  const cur = p && p.placed ? p.level : 0;
+  let note = `Reytingga kirgan o'yinchilar: <b>${fmt(dist.total)}</b>` + (dist.unplaced ? ` · joylashtirishda: <b>${fmt(dist.unplaced)}</b>` : '');
+  if (cur) note += `<br>Sizning darajangizda (${NAMES[cur-1]}) <b>${fmt(p.sameLevel)}</b> kishi bor, sizdan yuqorida <b>${fmt(p.above)}</b> kishi.`;
+  return `<section class="card full"><h2>Darajalar bo'yicha o'yinchilar</h2><div class="ladder">` +
+    NAMES.map((n, i) => `<div class="rung L${i+1} ${cur === i+1 ? 'cur' : ''}">${cur === i+1 ? '<div class="me">SIZ</div>' : ''}
+      <b>${i+1} · ${n}</b><span>${RANGES[i]} yulduz</span>
+      <div class="cnt">${fmt(dist.counts[i])} <small>kishi</small></div>
+      <div class="mini"><i style="width:${Math.round(dist.counts[i] / max * 100)}%"></i></div></div>`).join('') +
+    `</div><div class="note" style="color:var(--text);margin-top:14px">${note}</div></section>`;
+}
+
+function lbCard() {
+  return `<section class="card full"><h2>Reyting jadvali</h2>
+    <div class="chips">
+      <button class="ghost ${lbN===10?'on':''}" data-n="10" onclick="loadLb(10)">Top 10</button>
+      <button class="ghost ${lbN===100?'on':''}" data-n="100" onclick="loadLb(100)">Top 100</button>
+      <button class="ghost ${lbN===1000?'on':''}" data-n="1000" onclick="loadLb(1000)">Top 1000</button>
+      <span id="lbTotal" class="mute"></span></div>
+    <div id="lbNote" class="note"></div>
+    <table id="lb"></table></section>`;
+}
+
+const tile = (label, val, extra = '') => `<div class="tile ${extra}"><small>${label}</small><b title="${esc(val)}">${val}</b></div>`;
+const tileHtml = (label, html) => `<div class="tile"><small>${label}</small><b>${html}</b></div>`;
+function copyable(label, val) { return `<div class="tile copy" onclick="navigator.clipboard && navigator.clipboard.writeText('${esc(val)}')" title="Nusxalash uchun bosing"><small>${label}</small><b>${esc(val)}</b></div>`; }
+
+function bannerHtml(b) {
+  if (b && (b.type === 'gif' || b.type === 'image')) return `<div class="banner"><img class="bgimg" src="${esc(b.value)}" alt=""></div>`;
+  if (b && b.type === 'preset') return `<div class="banner pre ${esc(b.value)}"></div>`;
+  return `<div class="banner"></div>`;
+}
+
+// Profil kartasi: banner, avatar, nik, bayroq, belgilar va varaqlar
+function heroCard(p) {
+  const last = p.lastMatchAt ? new Date(p.lastMatchAt).toLocaleString('ru-RU', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }) : null;
+  const status = p.placed ? `Daraja <b>${p.level} · ${esc(p.levelName)}</b> · ★ ${p.stars}/${p.maxStars}` : `Joylashtirishda: <b>${p.played}/${p.needed}</b> match`;
+  const isMe = !!me && p.steamId === me.steamId;
+  const chips =
+    
+    `<span class="chip" ${p.country || !isMe ? '' : 'style="cursor:pointer" onclick="editProfile()"'}>${p.country ? flag(p.country, true) + ' ' + esc(countryName(p.country)) : '🌍 Davlat tanlanmagan'}</span>` +
+    (isMe ? '<span class="chip" style="cursor:pointer" onclick="editProfile()">✏️ Profilni tahrirlash</span>' : '') +
+    (p.creator ? '<span class="chip prem">👑 Yaratuvchi</span>' : '') +
+    (p.banned ? `<span class="chip" title="Vaqtincha bloklangan">🚫 Ban · ${fdate(p.bannedUntil)} gacha</span>` : '') +
+    (p.bot ? '<span class="chip">🤖 Namuna</span>' : '') +
+    (p.realRank ? `<span class="chip" title="Haqiqiy o'yinchilar orasidagi o'rin">#${p.realRank}</span>${tierTag(p.tier)}` : '') +
+    (p.faceit ? `<span class="chip"><span class="fl" style="background:${flColor(p.faceit.level)};width:18px;height:18px;font-size:11px">${p.faceit.level}</span>${p.faceit.elo} ELO</span>` : '') +
+    (!isMe && me && !p.bot ? `<button class="ghost" style="padding:4px 12px;font-size:12px;color:var(--bad);border-color:var(--bad)" onclick="reportPlayer('${esc(p.steamId)}')">⚠️ Jalaba qilish</button><span class="chip" style="cursor:pointer" onclick="playerMenu(event,'${esc(p.steamId)}')">⋯</span>` : '');
+  const T = (id, label) => `<button class="tab ${tab === id ? 'on' : ''}" onclick="setTab('${id}')">${label}</button>`;
+  return `<section class="card full prof ${p.premium ? 'vip' : ''}">${bannerHtml(p.banner)}<div class="body">
+    <div class="ava-lg">${p.avatar ? `<img src="${esc(p.avatar)}" alt="">` : esc((p.name || '?')[0].toUpperCase())}</div>
+    <div class="who">
+      <div class="nick">${esc(p.name)}</div>
+      <div class="last">${last ? `Oxirgi match: ${last}` : "Hali match o'ynamagan"}</div>
+      <div class="status">Holati: ${status}</div>
+      ${p.bio ? `<div style="margin:6px 0;color:var(--text);max-width:640px;overflow-wrap:anywhere">${esc(p.bio)}</div>` : ''}
+      <div class="chips2">${chips}</div>
+    </div></div>
+    </section>`;
+}
+
+// ---- Varaq: Reyting ----
+function ratingTab(p) {
+  if (!p.placed) {
+    const left = p.needed - p.played;
+    return `<section class="card full"><h2>Joylashtirish matchlari</h2>
+      <div class="progress"><div class="n">${p.played}<small>/${p.needed}</small></div>
+        <div><b>${left} ta match qoldi</b><div class="mute" style="font-size:13px">Shundan keyin sizga daraja beriladi</div></div></div>
+      ${slotsHtml(p)}
+      <div class="mute" style="font-size:13px">Hozirgi yulduz (g'alabalar uchun): <span class="stars">★ ${p.stars}</span> · haqiqiy reyting 10-matchdan keyin o'yiningizga qarab hisoblanadi.</div>
+      ${demoTools()}</section>`;
+  }
+  const inLvl = p.stars - (p.level - 1) * p.starsPerLevel;
+  const need = p.level < p.maxLevel ? p.level * p.starsPerLevel + 1 - p.stars : 0;
+  const row = Array.from({ length: 10 }, (_, i) => `<i class="${i < inLvl ? 'f' : ''}">★</i>`).join('');
+  return `<section class="card full"><h2>Mening reytingim</h2>
+      <div class="big L${p.level}">
+        ${badge(p.level)}
+        <div style="flex:1;min-width:240px;color:var(--text)">
+          <div class="L${p.level}" style="font-size:30px;font-weight:900">${esc(p.levelName)}</div>
+          <div class="starrow">${row}</div>
+          <div class="bar"><div style="width:${Math.max(0, inLvl) * 10}%"></div></div>
+          <div class="mute" style="font-size:13px">${need ? `Keyingi darajagacha ${need} yulduz` : 'Eng yuqori daraja'} · jami <span class="stars">★ ${p.stars}</span>/${p.maxStars}</div>
+        </div>
+        <div style="text-align:right;color:var(--text)">
+          ${p.realRank ? `<div style="font-size:34px;font-weight:900">#${p.realRank}</div>${tierTag(p.tier)}<div class="mute" style="font-size:12px">haqiqiy o'yinchilar orasida</div>` : (p.bot ? '<div class="mute">🤖 Namuna o\'yinchi</div>' : '')}
+          <div class="mute" style="margin-top:6px">${p.wins} g'alaba · ${p.losses} mag'lubiyat</div>
+        </div>
+      </div>
+      <div style="margin-top:18px"><h2 style="margin-bottom:6px">Oxirgi matchlar</h2>${matchesTable(p)}</div>
+      ${demoTools()}</section>`;
+}
+
+function matchesTable(p) {
+  if (!p.matches.length) return '<p class="mute">Hali match yo\'q.</p>';
+  return `<table><tr><th>Xarita</th><th>K/D/A</th><th>ADR</th><th></th><th>Ball</th><th>★</th></tr>` +
+    p.matches.map(m => `<tr><td>${esc(m.map)}</td><td>${m.kills}/${m.deaths}/${m.assists}</td><td>${m.adr}</td>
+      <td class="${m.win?'good':'mute'}">${m.win?'G':'M'}</td><td>${m.perf}%</td>
+      <td class="${m.delta>0?'good':m.delta<0?'bad':'mute'}">${m.delta == null ? (m.placement ? 'joylash' : '—') : (m.delta > 0 ? '+' : '') + m.delta}</td></tr>`).join('') + `</table>`;
+}
+
+function demoTools() { return ""; }
+
+// ---- Varaq: Profil (statistika, K/D, Steam ID, FACEIT + sozlamalar) ----
+function profileTab(p) {
+  const s = p.stats, f = p.faceit;
+  const faceit = f
+    ? tile('Nikneym', esc(f.nickname)) + tile('Ochkolar', f.elo + ' ELO') +
+      `<div class="tile"><small>Daraja</small><b><span class="fl" style="background:${flColor(f.level)}">${f.level}</span></b></div>`
+    : tile('Nikneym', 'Ulanmagan') + tile('Ochkolar', '0 ELO') + tile('Daraja', '—');
+  const info = `<section class="card full"><h2>O'yinchi haqida ma'lumot</h2><div class="info">
+    <div class="sec"><h3>Joylashuv</h3><div class="tiles">${tileHtml('Davlat', p.country ? flag(p.country, true) + ' ' + esc(countryName(p.country)) : '—')}</div></div>
+    <div class="sec"><h3>Statistika</h3><div class="tiles">${tile("O'yinlar", fmt(s.matches))}${tile("G'alabalar", s.winRate + '%')}${tile('Raundlar', fmt(s.rounds))}${tile('K/D', s.kd)}</div></div>
+    <div class="sec"><h3>Steam ID</h3><div class="tiles">${copyable('SteamID32', p.steamId32)}${copyable('SteamID64', p.steamId64)}</div></div>
+    <div class="sec"><h3>Samaradorlik</h3><div class="tiles">${tile("O'ldirishlar", fmt(s.kills))}${tile("O'limlar", fmt(s.deaths))}${tile('Yordamlar', fmt(s.assists))}${tile('ADR', s.adr)}</div></div>
+    <div class="sec"><h3>FACEIT statistikasi</h3><div class="tiles">${faceit}</div></div>
+    <div class="sec"><h3>Aniqlik</h3><div class="tiles">${tile('Headshot', s.hs + '%')}${tile("G'alaba / mag'lub.", p.wins + ' / ' + p.losses)}</div></div>
+  </div>
+  <div class="note">${p.steamFake ? 'Bu demo akkaunt: Steam ID va FACEIT qiymatlari namuna sifatida yaratilgan. ' : ''}${f && f.demo ? "FACEIT ma'lumoti demo. " : ''}${!f && !p.steamFake ? "FACEIT ma'lumoti uchun serverga FACEIT_API_KEY kiriting (README ga qarang). " : ''}</div></section>`;
+
+  const locked = !p.premium && p.nameChangeAt > Date.now();
+  const hint = p.premium ? '⭐ Premium: nikni cheklovsiz o\'zgartirasiz.'
+    : locked ? `Keyingi o'zgartirish: <b>${fdate(p.nameChangeAt)}</b> (oyda 1 marta). Premium bilan cheklovsiz.`
+    : "Nikni oyda bir marta bepul o'zgartirish mumkin. Premium bilan cheklovsiz.";
+  const settings = `<section class="card full"><h2>Sozlamalar</h2><div class="row2">
+    <div><label>Nikneym</label><div class="inline"><input id="nm" value="${esc(p.name)}" maxlength="24" ${locked ? 'disabled' : ''}>
+      <button onclick="saveName()" ${locked ? 'disabled' : ''}>Saqlash</button></div><div class="note">${hint}</div></div>
+    <div><label>Davlat (bayroq)</label><div class="inline"><select onchange="setCountry(this.value)">
+      <option value="">— tanlang —</option>${cfg.countries.map(c => `<option value="${c[0]}" ${p.country === c[0] ? 'selected' : ''}>${esc(c[1])}</option>`).join('')}</select></div>
+      <div class="note">Tanlangan davlat bayrog'i profilingizda va jadvalda ko'rinadi.</div></div>
+  </div></section>`;
+  return info;
+}
+
+// ---- Varaq: Demo (MM highlight videolari + o'yinchi qidirish) ----
+const KIND_LABELS = { ace:'🔥 Ace', '4k':'4K', '3k':'3K', clutch:'🎯 Clutch', boshqa:'🎬' };
+function vcard(v, owner, canDelete) {
+  const bg = v.provider === 'youtube' ? `background-image:url('https://i.ytimg.com/vi/${esc(v.vid)}/hqdefault.jpg')` : '';
+  const act = canDelete ? `<button class="ghost" onclick="delVideo('${v.id}')">O'chirish</button>`
+    : (me && owner ? `<button class="ghost" onclick="reportVideo('${esc(owner.steamId)}','${v.id}')">Shikoyat</button>` : '');
+  return `<div class="vcard"><div class="vthumb" style="${bg}" onclick="playVideo(this,'${v.provider}','${esc(v.vid)}')"><span class="vplay">▶</span><span class="vkind">${KIND_LABELS[v.kind] || ''}</span></div>
+    <div class="vmeta"><b>${esc(v.title)}</b><div class="mute" style="font-size:12px">${owner ? `<a href="#" onclick="openPlayer('${esc(owner.steamId)}');return false">${esc(owner.name)}</a> · ` : ''}${esc(v.map || '')} ${fdate(v.date)}</div>${act}</div></div>`;
+}
+function playVideo(el, provider, vid) {
+  const src = provider === 'youtube' ? `https://www.youtube-nocookie.com/embed/${vid}?autoplay=1` : `https://streamable.com/e/${vid}?autoplay=1`;
+  el.outerHTML = `<iframe class="vframe" src="${src}" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+}
+function demoRow(d, own) {
+  const hl = (d.highlights || []).map(h => `<span class="tag t10">${h.kind === 'ace' ? '🔥 Ace' : h.kind.toUpperCase()} · ${h.round}-raund</span>`).join('');
+  const cmd = own && d.name ? `<button class="ghost" style="margin-left:auto" onclick="copyCmd('playdemo replays/${esc(d.name.replace(/\.dem$/i, ''))}')">▶ playdemo</button>` : '';
+  return `<div class="srow" style="cursor:default;flex-wrap:wrap"><b>${esc(d.map || 'xarita noma\'lum')}</b><span class="mute">${fdate(d.date)}</span>${d.parsed ? `<span>${d.kills}/${d.deaths}/${d.assists}</span><span class="mute">${d.rounds} raund</span>` : '<span class="mute">tahlil qilinmagan</span>'}${hl}${cmd}</div>`;
+}
+function demosCard(p, own) {
+  const list = p.demos || [];
+  return `<section class="card full"><h2>${own ? 'Mening MM demolarim' : esc(p.name) + ' demolari'} (${list.length})</h2>${list.length ? list.map(d => demoRow(d, own)).join('')
+    : !own ? '<p class="mute">Hali demo yo\'q.</p>' : `<p class="mute">Hali demo yo'q. Desktop ilova CS2 "replays" papkasini kuzatadi: o'yinda <b>Watch → Your Matches</b> orqali matchni yuklab oling, u shu yerda paydo bo'ladi.</p>`}</section>`;
+}
+function copyCmd(t) { navigator.clipboard.writeText(t).then(() => alert("Nusxalandi. CS2 konsolida shuni yozing:\n" + t)); }
+async function showToken() { const r = await api('/api/me/token', {}); prompt("Desktop ilova uchun kalit (nusxa olib desktop/config.json ga yozing):", r.token); }
+function videosTab(p) {
+  const grid = (list, owner, del) => list.length ? `<div class="vgrid">${list.map(v => vcard(v, owner || v.owner, del)).join('')}</div>` : '<p class="mute">Hali highlight yo\'q.</p>';
+  if (ro) return `<section class="card full"><h2>Demo va Highlight'lar</h2><p class="mute">Boshqa o'yinchilarning demosi va video highlight'lari maxfiylik tufayli ko'rinmaydi.</p></section>`;
+  const max = 10, mine = me.videos || [];
+  const search = `<section class="card full"><h2>O'yinchini qidirish</h2><input id="sq" placeholder="Nikneym yozing (kamida 2 ta harf)" oninput="doSearch(this.value)"><div id="sres"></div></section>`;
+  const add = `<section class="card full"><h2>Mening highlight'larim (${mine.length}/${max})</h2>
+    <div class="mute" style="font-size:13px">MM'da o'ynagan eng zo'r lahzangizni YouTube yoki Streamable'ga yuklab, havolasini qo'ying.${me.premium ? '' : ' Premium bilan 10 tagacha.'}</div>
+    <div class="inline" style="margin-top:8px"><input id="vurl" placeholder="https://www.youtube.com/watch?v=..."><input id="vtitle" placeholder="Nomi (masalan: 1v4 clutch)" maxlength="60"></div>
+    <div class="inline" style="margin-top:8px"><select id="vkind">${Object.keys(KIND_LABELS).map(k => `<option value="${k}">${KIND_LABELS[k]}</option>`).join('')}</select>
+      <select id="vmap"><option value="">Xarita</option>${maps.map(m => `<option>${m}</option>`).join('')}</select><button onclick="addVideo()">Qo'shish</button></div>
+    ${mine.length ? grid(mine, null, true) : ''}<div class="note">Havolalar tasdiqlanmagan. Noo'rin videoga "Shikoyat" tugmasi bor.</div></section>`;
+  const fd = `<section class="card full"><h2>Oxirgi highlight'lar</h2>${feed === null ? '<p class="mute">Yuklanmoqda...</p>' : feed.length ? grid(feed, null, false) : "<p class=\"mute\">Hali hech kim video qo'shmagan. Birinchi bo'ling!</p>"}</section>`;
+  return search + demosCard(me, true);
+}
+async function loadFeed() { feedLoading = true; const r = await api('/api/videos?limit=12'); feed = r.videos || []; feedLoading = false; paint(); }
+function doSearch(q) {
+  clearTimeout(stimer);
+  stimer = setTimeout(async () => {
+    const r = await api('/api/search?q=' + encodeURIComponent(q)), box = $('#sres'); if (!box) return;
+    box.innerHTML = q.trim().length < 2 ? '' : (r.players || []).map(x => `<div class="srow" onclick="openPlayer('${esc(x.steamId)}')">${ava(x)}<b>${esc(x.name)}</b>${x.premium ? '<span title="Premium" style="color:#ffcf4a">★</span>' : ''}${x.bot ? '<span title="Namuna">🤖</span>' : ''}<span class="mute" style="margin-left:auto">${x.level ? x.level + ' · ' + esc(x.levelName) : 'Joylashtirishda'}</span></div>`).join('') || '<p class="mute">Topilmadi.</p>';
+  }, 250);
+}
+async function addVideo() {
+  const r = await api('/api/videos/add', { url: $('#vurl').value, title: $('#vtitle').value, kind: $('#vkind').value, map: $('#vmap').value });
+  if (r.error) return alert(r.error); feed = null; render();
+}
+async function delVideo(id) { if (!confirm("Video o'chirilsinmi?")) return; await api('/api/videos/delete', { id }); feed = null; render(); }
+async function reportVideo(owner, id) { const r = await api('/api/videos/report', { owner, id }); alert(r.error || 'Shikoyat qabul qilindi'); }
+
+const hiddenCard = p => `<section class="card full"><label style="display:flex;gap:10px;align-items:center;cursor:pointer"><input type="checkbox" style="width:auto" ${p.hidden ? 'checked' : ''} onchange="setHidden(this.checked)"> Profilimni boshqalardan yashirish (statistika va matchlar ko'rinmaydi)</label></section>`;
+async function setHidden(v) { await api('/api/me/hidden', { hidden: v }); render(); }
+
+// ---- Varaq: Premium ----
+function bannerPanel(p) {
+  const presets = cfg.presets.map(id => `<div class="thumb pre ${id}" onclick="setBanner('preset','${id}')"><span>${PRESET_LABELS[id] || id}</span></div>`).join('');
+  const cats = cfg.gifCats.map(c => `<button class="ghost ${gifCat === c ? 'on' : ''}" onclick="loadGifs('${c}')">${CAT_LABELS[c] || c}</button>`).join('');
+  let gifGrid = '';
+  if (gifCat) {
+    gifGrid = gifs === null ? '<p class="mute">Yuklanmoqda...</p>'
+      : gifs.length ? `<div class="thumbs">${gifs.map((u, i) => `<div class="thumb" onclick="setBanner('gif', gifs[${i}])"><img src="${esc(u)}" alt=""></div>`).join('')}</div>`
+      : `<p class="mute">${esc(gifNote || "GIF topilmadi.")}</p>`;
+  }
+  return `<div class="mute" style="font-size:13px;margin-top:6px">Rasm yuklash (qurilmadan; o'rtadan qirqiladi, taxminan 8:1):</div>
+    <input type="file" id="bf" accept="image/*" onchange="uploadBanner(this)" style="margin-top:6px">
+    <div class="mute" style="font-size:13px">Tayyor animatsiyali bannerlar:</div>
+    <div class="thumbs">${presets}</div>
+    <div class="mute" style="font-size:13px;margin-top:14px">GIF kategoriyalari:</div>
+    <div class="chips" style="margin-top:8px">${cats}</div>${gifGrid}
+    <div class="mute" style="font-size:13px;margin-top:14px">Yoki GIF havolasini qo'ying (giphy.com, tenor.com yoki imgur.com, https bilan):</div>
+    <div class="inline" style="margin-top:6px"><input id="gifurl" placeholder="https://media.giphy.com/media/.../giphy.gif"><button onclick="setBanner('gif', $('#gifurl').value)">O'rnatish</button></div>
+    <div class="mute" style="font-size:13px;margin-top:14px">Yoki o'z rasmingiz havolasi (png, jpg, webp; imgur, postimg yoki ibb orqali):</div>
+    <div class="inline" style="margin-top:6px"><input id="imgurl" placeholder="https://i.imgur.com/....png"><button onclick="setBanner('image', $('#imgurl').value)">O'rnatish</button></div>
+    <div class="actions"><button class="ghost" onclick="setBanner('none','')">Bannerni olib tashlash</button></div>
+    <div class="note">Barcha GIF'lar tashqi saytdan yuklanadi. Noo'rin kontent qo'ymang.</div>`;
+}
+
+function premiumTab(p) {
+  const perks = `<ul class="perks">
+    <li>Profil banneri: GIF, tayyor animatsiya yoki o'z rasmingiz (yuklash yoki havola)</li>
+    <li>Nikneymni xohlagan vaqtda o'zgartirish (oddiy akkauntda oyda 1 marta)</li>
+    <li>Oltin VIP ramka va ★ PREMIUM belgisi profilda va reyting jadvalida</li></ul>`;
+  if (!p.premium) {
+    return `<section class="card full"><h2>Premium</h2>${perks}
+      <div class="price">$${cfg.priceUsd} <small>/ ${cfg.premiumDays} kun</small></div>
+      <div class="actions"><button class="gold" onclick="buyPremium()">⭐ Premium sotib olish</button></div>
+      <div class="note">${cfg.premiumDemo ? "Demo rejim: to'lov olinmaydi, tugma Premium'ni sinash uchun yoqadi. Haqiqiy to'lov tizimi keyin ulanadi." : "To'lov tizimi hali ulanmagan."}</div></section>`;
+  }
+  return `<section class="card full"><h2>Premium faol</h2>
+    <div style="margin-bottom:6px">${p.premiumUntil > 4e12 ? '⭐ Premium: <b>umrbod</b>' : '⭐ Muddati: <b>' + fdate(p.premiumUntil) + '</b> gacha'}</div>${perks}
+    <div class="actions"><button onclick="editProfile()">✏️ Banner va profilni tahrirlash</button></div></section>`;
+}
+
+// Qo'l pichoqni ushlab turgan rasm
+function vmSvg(l) {
+  const k = KNIVES[l.knife] || KNIVES.karambit, g = GLOVES[l.gloves] || GLOVES.none, hd = (HANDLES[l.handle] || HANDLES.black).fill;
+  const fin = FINISHES[l.finish] ? l.finish : 'steel';
+  const defs = Object.entries(FINISHES).map(([id, f]) =>
+    `<linearGradient id="fin-${id}" x1="0" y1="0" x2="1" y2="1">${f.stops.map((c, i) => `<stop offset="${Math.round(i / (f.stops.length - 1) * 100)}%" stop-color="${c}"/>`).join('')}</linearGradient>`).join('') +
+    `<pattern id="camo" width="14" height="14" patternUnits="userSpaceOnUse"><rect width="14" height="14" fill="#4b5d34"/><circle cx="4" cy="4" r="3.2" fill="#2e3a20"/><circle cx="11" cy="10" r="3" fill="#7a6a3a"/></pattern>`;
+  const gf = g.fill === 'skin' ? '#d9a47c' : g.fill === 'camo' ? 'url(#camo)' : g.fill;
+  const cuff = g.fill === 'skin' ? '#3b4a35' : gf;
+  const handle = k.wide ? `<rect x="-28" y="-8" width="56" height="46" rx="9" fill="${hd}"/>` : `<rect x="-11" y="-8" width="22" height="82" rx="8" fill="${hd}"/>`;
+  const ring = k.ring ? `<circle cx="0" cy="86" r="12" fill="none" stroke="${hd}" stroke-width="5"/>` : '';
+  const fuller = k.fuller ? `<path d="${k.fuller}" stroke="rgba(0,0,0,.28)" stroke-width="2" fill="none"/>` : '';
+  const ln = 'stroke="rgba(0,0,0,.38)" stroke-width="1.5"';
+  return `<svg viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${esc(k.name)}"><defs>${defs}</defs>
+    <ellipse cx="210" cy="300" rx="130" ry="12" fill="rgba(0,0,0,.35)"/>
+    <g class="bob"><g class="flip"><g transform="translate(210,160) rotate(-14)">
+      ${handle}${ring}
+      <path d="${k.blade}" fill="url(#fin-${fin})" stroke="rgba(0,0,0,.5)" stroke-width="1.5" stroke-linejoin="round"/>${fuller}
+      <rect x="-30" y="-4" width="60" height="50" rx="17" fill="${gf}" ${ln}/>
+      <path d="M-15,-2 L-15,42 M0,-2 L0,44 M15,-2 L15,42" stroke="rgba(0,0,0,.28)" stroke-width="1.5" fill="none"/>
+      <ellipse cx="-31" cy="8" rx="10" ry="20" transform="rotate(-12 -31 8)" fill="${gf}" ${ln}/>
+      <rect x="-28" y="44" width="56" height="18" rx="6" fill="${cuff}" ${ln}/>
+      <path d="M-25,60 L25,60 L62,270 L-40,270 Z" fill="#2f3a2a"/>
+    </g></g></g></svg>`;
+}
+
+function demoInner(L) {
+  L = L || lo;
+  if (ro) {
+    const nm = (m, id) => esc((m[id] || {}).name || '');
+    return `<h2>Demo: qo'ldagi pichoq</h2><div class="vm-wrap"><div class="vm" id="vm">${vmSvg(L)}</div>
+      <div class="vm-opts"><div class="note">${nm(KNIVES, L.knife)} · ${nm(FINISHES, L.finish)} · qo'lqop: ${nm(GLOVES, L.gloves)} · dastak: ${nm(HANDLES, L.handle)}</div>
+      <div class="actions"><button onclick="inspect()">🔍 Ko'rish</button></div></div></div>`;
+  }
+  const free = cfg.freeFinishes || [];
+  const chip = (cat, id, label) => `<button class="ghost ${L[cat] === id ? 'on' : ''}" onclick="pick('${cat}','${id}')">${esc(label)}</button>`;
+  const row = (title, cat, map) => `<label>${title}</label><div class="chips">${Object.entries(map).map(([id, o]) => chip(cat, id, o.name)).join('')}</div>`;
+  return `<h2>Demo: qo'lingizga qurol oling</h2><div class="vm-wrap">
+    <div class="vm" id="vm">${vmSvg(L)}</div>
+    <div class="vm-opts">${row('Pichoq', 'knife', KNIVES)}${row('Qoplama (skin)', 'finish', FINISHES)}${row("Qo'lqop", 'gloves', GLOVES)}${row('Dastak', 'handle', HANDLES)}
+      <div class="actions"><button onclick="inspect()">🔍 Ko'rish</button></div>
+      <div class="note">Barcha skinlar, pichoq va qo'lqoplar mutlaqo BEPUL! Tanlovingiz avtomatik saqlanadi va profilingizda ko'rinadi. Pichoq rasmlari soddalashtirilgan namuna, haqiqiy o'yin modellari emas.</div></div></div>`;
+}
+function demoTab(p) { if (ro) return `<section class="card full" id="demoCard">${demoInner(p.loadout)}</section>`; if (!lo) lo = Object.assign({}, p.loadout); return `<section class="card full" id="demoCard">${demoInner()}</section>`; }
+async function pick(cat, id) {
+  // All finishes and skins are 100% free for everyone!
+  lo[cat] = id;
+  $('#demoCard').innerHTML = demoInner();
+  const r = await api('/api/me/loadout', { [cat]: id });
+  if (r.loadout) { me.loadout = r.loadout; const h = document.querySelector('.prof'); if (h) h.outerHTML = heroCard(me); }
+}
+function inspect() { const v = $('#vm'); v.classList.remove('insp'); void v.offsetWidth; v.classList.add('insp'); }
+
+function paint() {
+  const _sc = (document.querySelector('#modal .mbox') || {}).scrollTop || 0;
+  ro = !!viewed;
+  const D = (id, label) => `<button class="${tab === id ? 'on' : ''}" onclick="setTab('${id}')">${label}</button>`;
+  $('#auth').innerHTML = me
+    ? `<span class="pill" style="position:relative">${ava(me)}<span style="font-weight:600">${esc(me.name)}</span>
+        <button class="ghost" style="padding:5px 14px;border-radius:999px" onclick="openProfile()">Ko'rish</button>
+        <button class="ghost" data-mbtn style="padding:5px 14px;border-radius:999px;font-size:18px;line-height:1" onclick="toggleMenu()">⋯</button>
+        <div id="menu"><label>Promokod</label><div class="inline"><input id="promo" placeholder="Promokodni kiriting" maxlength="32"><button onclick="redeemPromo()">Qo'llash</button></div>
+          <button class="ghost" style="width:100%;margin-bottom:8px" onclick="showToken()">🔑 Ilova kaliti</button>
+          <a class="out" href="/auth/logout">Chiqish</a></div></span>`
+    : '';
+  $('#modal').innerHTML = '';
+  if (viewed) {
+    if (tab === 'premium') tab = 'rating';
+    const content = viewed.hidden ? `<section class="card full"><h2>Profil yashirilgan</h2><div class="mute">Bu o'yinchi profilini boshqalardan yashirgan.</div></section>`
+      : tab === 'profile' ? profileTab(viewed) : tab === 'demo' ? videosTab(viewed) : ratingTab(viewed);
+    $('#root').innerHTML = heroCard(viewed) + content + lbCard();
+    $('#dock').innerHTML = D('rating', '🏆 Reyting') + D('profile', '👤 Profil') + D('demo', '🎬 Demo') + `<button onclick="closeView()">← Orqaga</button>`;
+    loadLb(lbN); return;
+  }
+  if (!me) { $('#dock').innerHTML = ''; $('#root').innerHTML = landing(); loadLb(lbN); return; }
+  const content = tab === 'profile' ? profileTab(me) : tab === 'demo' ? videosTab(me) : tab === 'premium' ? premiumTab(me) : ratingTab(me);
+  $('#root').innerHTML = heroCard(me) + content + ladderCard(me) + lbCard();
+  $('#dock').innerHTML = D('rating', '🏆 Reyting') + D('demo', '🎬 Demo');   // Profil: tepadagi "Ko'rish" orqali
+  if (editOpen) $('#modal').innerHTML = editModal(me); else if (me.showPremiumPrompt) $('#modal').innerHTML = premiumModal();
+  const _mb = document.querySelector('#modal .mbox'); if (_mb) _mb.scrollTop = _sc;
+  loadLb(lbN);
+}
+
+async function render() {
+  [me, dist, cfg] = await Promise.all([api('/api/me'), api('/api/levels'), api('/api/config')]);
+  lo = null;
+  maps = cfg.maps || [];
+  paint();
+}
+
+async function loadLb(n) {
+  lbN = n;
+  document.querySelectorAll('[data-n]').forEach(b => b.classList.toggle('on', +b.dataset.n === n));
+  const r = await api('/api/leaderboard?limit=' + n);
+  if (!$('#lb')) return;
+  $('#lbTotal').textContent = `Jami: ${r.total} · haqiqiy o'yinchilar: ${r.real}`;
+  const ln = $('#lbNote'); if (ln) ln.textContent = r.real < 100 ? "ℹ️ Jadvalning bir qismi namuna (bot) o'yinchilar. Haqiqiy o'yinchilar soni 100 ga yetganda ular jadvaldan yo'qoladi. Haqiqiy o'yinchilar o'z o'rnini (#) profilida ko'radi." : '';
+  $('#lb').innerHTML = `<tr><th>#</th><th>O'yinchi</th><th>Daraja</th><th>Yulduz</th><th>G / M</th></tr>` +
+    r.rows.map(p => `<tr class="${me && p.steamId===me.steamId ? 'me' : ''}" style="cursor:pointer" onclick="openPlayer('${esc(p.steamId)}')">
+      <td>${p.rank}</td><td>${flag(p.country)} ${esc(p.name)}  ${p.banned ? '<span title="Ban">🚫</span>' : ''}${p.creator ? '<span title="Yaratuvchi">👑</span>' : ''} ${p.tier && p.tier !== 'Top 1000' ? tierTag(p.tier) : ''}<button class="ghost" style="float:right;padding:2px 10px" onclick="playerMenu(event,'${esc(p.steamId)}')">⋯</button></td><td>${lvlHtml(p.level, p.levelName)}</td>
+      <td class="stars">★ ${p.stars}</td><td class="mute">${p.wins} / ${p.losses}</td></tr>`).join('');
+}
+
+function setTab(t) { tab = t; paint(); }
+function openProfile() { viewed = null; if (location.pathname !== '/') history.pushState({}, '', '/'); tab = 'profile'; paint(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+async function openPlayer(id, push = true) {
+  const r = await api('/api/player?id=' + encodeURIComponent(id));
+  if (!r || r.error) { alert("O'yinchi topilmadi"); viewed = null; if (location.pathname !== '/') history.replaceState({}, '', '/'); paint(); return; }
+  viewed = r; tab = 'rating';
+  if (push) history.pushState({}, '', '/u/' + encodeURIComponent(id));
+  paint(); window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function closeView() { viewed = null; history.pushState({}, '', '/'); paint(); }
+function premiumModal() {
+  return `<div class="mback" onclick="if(event.target===this)closePrompt()"><div class="mbox">
+    <button class="mx" onclick="closePrompt()">✕</button><div class="mico">👑</div>
+    <h2>VIP Premium imtiyozlari</h2><p class="mute">Akkauntingizni maksimal darajaga ko'taring va eksklyuziv statusga ega bo'ling.</p>
+    <ul class="mperks"><li>✓ Nikneymni cheksiz o'zgartirish (30 kunlik kutish yo'q)</li><li>✓ Profil banneri: GIF, animatsiya yoki o'z rasmingiz</li><li>✓ Oltin VIP ramka va ★ PREMIUM belgisi</li></ul>
+    <button class="gold" style="width:100%;padding:14px" onclick="buyPremium()">XARID QILISH — $${cfg.priceUsd} / OYLIK</button>
+    <div class="note">${cfg.premiumDemo ? "Demo rejim: to'lov olinmaydi." : "To'lov tizimi tez orada ulanadi."}</div></div></div>`;
+}
+async function closePrompt() { me.showPremiumPrompt = false; $('#modal').innerHTML = ''; await api('/api/me/prompt-seen', {}); }
+
+async function addMatch() {
+  const r = await api('/api/match/add', { kills:+$('#k').value, deaths:+$('#d').value, assists:+$('#a').value, adr:+$('#adr').value,
+    rounds:+$('#rd').value, hs:+$('#hs').value, map:$('#map').value, win:$('#win').value==='1' });
+  if (r.error) alert(r.error); render();
+}
+async function seed(skill, count, append) { await api('/api/demo/seed', { skill, count, append }); render(); }
+async function reset() { await api('/api/demo/reset', {}); render(); }
+async function saveName() {
+  const r = await api('/api/me/name', { name: $('#nm').value });
+  if (r.error) alert(r.error); render();
+}
+async function setCountry(c) {
+  if (!c) return;
+  const r = await api('/api/me/country', { country: c });
+  if (r.error) alert(r.error); render();
+}
+async function buyPremium() {
+  if (!cfg.premiumDemo) { alert("To'lov tizimi tez orada ulanadi."); return; }
+  if (!confirm(`Demo rejim: to'lov olinmaydi. Premium ${cfg.premiumDays} kunga yoqilsinmi?`)) return;
+  const r = await api('/api/premium/activate', {});
+  if (r.error) alert(r.error); render();
+}
+async function setBanner(type, value) {
+  const r = await api('/api/me/banner', { type, value });
+  if (r.error) alert(r.error); else window.scrollTo({ top: 0, behavior: 'smooth' });
+  render();
+}
+async function loadGifs(cat) {
+  gifCat = cat; gifs = null; gifNote = ''; paint();
+  const r = await api('/api/gifs?cat=' + cat);
+  gifs = r.gifs || [];
+  gifNote = r.needKey ? "GIF qidirish uchun serverga GIPHY_API_KEY kerak (README ga qarang). Hozircha GIF havolasini quyida qo'lda qo'yishingiz yoki tayyor bannerlardan tanlashingiz mumkin." : (r.error || '');
+  paint();
+}
+
+function editProfile() { editOpen = true; paint(); }
+function closeEdit() { editOpen = false; paint(); }
+function editModal(p) {
+  const locked = !p.premium && p.nameChangeAt > Date.now();
+  const hint = p.premium ? "⭐ Premium: nikni cheklovsiz o'zgartirasiz." : locked ? `Keyingi o'zgartirish: <b>${fdate(p.nameChangeAt)}</b> (oyda 1 marta). Premium bilan cheklovsiz.` : "Nikni oyda bir marta bepul o'zgartirish mumkin. Premium bilan cheklovsiz.";
+  return `<div class="mback" onclick="if(event.target===this)closeEdit()"><div class="mbox" style="text-align:left;max-height:90vh;overflow:auto;max-width:620px">
+    <button class="mx" onclick="closeEdit()">✕</button><h2>Profilni tahrirlash</h2>
+    <label>Nikneym</label><div class="inline"><input id="nm" value="${esc(p.name)}" maxlength="24" ${locked ? 'disabled' : ''}><button onclick="saveName()" ${locked ? 'disabled' : ''}>Saqlash</button></div><div class="note">${hint}</div>
+    <label style="margin-top:12px">Davlat (bayroq)</label><select onchange="setCountry(this.value)"><option value="">— tanlang —</option>${cfg.countries.map(c => `<option value="${c[0]}" ${p.country === c[0] ? 'selected' : ''}>${esc(c[1])}</option>`).join('')}</select>
+    <label style="margin-top:12px">Bio</label><textarea id="bio" maxlength="160" rows="3" placeholder="O'zingiz haqingizda qisqacha (160 belgigacha)" style="width:100%;background:#0b0d11;border:1px solid var(--line);border-radius:12px;color:var(--text);padding:10px 12px;resize:vertical;font:inherit">${esc(p.bio || '')}</textarea>
+    <div class="actions"><button onclick="saveBio()">Bioni saqlash</button></div>
+    <label style="margin-top:14px">Profil banneri</label>
+    ${p.premium ? bannerPanel(p)
+      : `<div class="note">🔒 O'z rasmingizni banner qilish Premium uchun. <a href="#" onclick="closeEdit();setTab('premium');return false">Premium varag'i</a></div>`}
+    <label style="display:flex;gap:10px;align-items:center;margin-top:14px;cursor:pointer"><input type="checkbox" style="width:auto" ${p.hidden ? 'checked' : ''} onchange="setHidden(this.checked)"> Profilimni boshqalardan yashirish</label>
+  </div></div>`;
+}
+async function saveBio() { const r = await api('/api/me/bio', { bio: $('#bio').value }); if (r.error) alert(r.error); render(); }
+async function uploadBanner(inp) {
+  const f = inp.files[0]; if (!f) return;
+  const img = new Image(), url = URL.createObjectURL(f);
+  img.onload = async () => {
+    const W = 1600, H = 206, c = document.createElement('canvas'); c.width = W; c.height = H;
+    const sc = Math.max(W / img.width, H / img.height), w = img.width * sc, hh = img.height * sc;
+    c.getContext('2d').drawImage(img, (W - w) / 2, (H - hh) / 2, w, hh); URL.revokeObjectURL(url);
+    const r = await api('/api/me/banner/upload', { data: c.toDataURL('image/jpeg', 0.82) });
+    if (r.error) alert(r.error); render();
+  };
+  img.onerror = () => alert("Rasmni o'qib bo'lmadi");
+  img.src = url;
+}
+function playerMenu(ev, id) {
+  ev.stopPropagation();
+  if (!me) return alert('Jalaba qilish uchun Steam orqali kiring');
+  if (id === me.steamId) return;
+  const b = (t, f) => `<button onclick="${f}('${id}')">${t}</button>`, m = $('#pmenu');
+  m.innerHTML = b('⚠ Jalaba qilish', 'reportPlayer') + (me.admin ? b('🚫 Ban berish', 'adminBan') + b('✅ Banni olib tashlash', 'adminUnban') : '');
+  m.style.display = 'block'; m.style.left = Math.max(8, Math.min(ev.clientX, innerWidth - 220)) + 'px'; m.style.top = Math.max(8, Math.min(ev.clientY + 8, innerHeight - 200)) + 'px';
+}
+async function pm(url, body, ok) { $('#pmenu').style.display = 'none'; const r = await api(url, body); alert(r.error || ok); render(); }
+const reportPlayer = id => confirm("Bu o'yinchiga jalaba qilasizmi?") && pm('/api/report/player', { id }, 'Jalaba qabul qilindi');
+const adminPremium = id => { const d = prompt('Necha kun Premium berilsin?', '30'); if (d) pm('/api/admin/premium', { id, days: d }, 'Premium berildi'); };
+const adminBan = id => { const d = prompt('Necha kunga ban?', '3'); if (d) pm('/api/admin/ban', { id, days: d }, 'Ban berildi'); };
+const adminUnban = id => pm('/api/admin/unban', { id }, 'Ban olib tashlandi');
+document.addEventListener('click', e => { const m = $('#pmenu'); if (m && !e.target.closest('#pmenu')) m.style.display = 'none'; });
+function toggleMenu() { const m = $('#menu'); if (m) m.classList.toggle('open'); }
+document.addEventListener('click', e => { const m = $('#menu'); if (m && m.classList.contains('open') && !e.target.closest('#menu') && !e.target.closest('[data-mbtn]')) m.classList.remove('open'); });
+async function redeemPromo() {
+  const code = $('#promo').value.trim(); if (!code) return;
+  const r = await api('/api/promo', { code });
+  if (r.error) return alert(r.error);
+  alert(`Promokod qabul qilindi: +${r.promoDays} kun Premium`); render();
+}
+window.onpopstate = () => { if (location.pathname.startsWith('/u/')) openPlayer(decodeURIComponent(location.pathname.slice(3)), false); else { viewed = null; paint(); } };
+render().then(() => { if (location.pathname.startsWith('/u/')) openPlayer(decodeURIComponent(location.pathname.slice(3)), false); });
+</script>
+</body>
+</html>

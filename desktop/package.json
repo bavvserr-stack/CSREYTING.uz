@@ -1,0 +1,21 @@
+{
+  "name": "cs2-rating-desktop",
+  "version": "0.1.0",
+  "description": "csreyting.uz — desktop ilova (Electron qobig'i)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --x64"
+  },
+  "optionalDependencies": { "@laihoe/demoparser2": "*" },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "uz.cs2rating.app",
+    "productName": "csreyting.uz",
+    "files": ["main.js", "watcher.js", "package.json"],
+    "win": { "target": "nsis" }
+  }
+}
